@@ -1,0 +1,10 @@
+spring:
+  rabbitmq:
+    username: jimdo
+    password: jimdo
+  cloud:
+    stream:
+      bindings:
+        log-in-0:
+          destination: log-topic
+          group: logging
