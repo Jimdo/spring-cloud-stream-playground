@@ -1,6 +1,6 @@
- version: "3.8"
+version: "3.8"
 
- services:
+services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -9,3 +9,15 @@
     environment:
       - RABBITMQ_DEFAULT_USER=jimdo
       - RABBITMQ_DEFAULT_PASS=jimdo
+  localstack:
+    container_name: localstack_main
+    image: localstack/localstack:2.2
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DEBUG=0
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"

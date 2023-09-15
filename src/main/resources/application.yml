@@ -7,32 +7,59 @@ spring:
       fixed-delay: 5000
   cloud:
     stream:
+      sqs:
+        default:
+          consumer:
+            snsFanout: false
 #      default:
 #        error-handler-definition: errorHandler
       bindings:
         addressCreator-out-0:
+          binder: rabbit
           destination: address-topic
           group: address
-        uppercasePersonCreatorOut:
-          destination: person-topic
+#        uppercasePersonCreatorOut:
+#          binder: sqs
+#          destination: person
+#          group: person
+#          consumer:
+#            max-attempts: 1
+        personCreator-out-0:
+          content-type: application/json
+          binder: sqs
+          destination: person
           group: person
-          consumer:
-            max-attempts: 1
+        uppercase-in-0:
+          content-type: application/json
+          binder: sqs
+          destination: person
+          group: person
+        uppercase-out-0:
+          content-type: application/json
+          binder: sqs
+          destination: log
+          group: log
         log-in-0:
-          destination: person-topic
-          group: person
+          content-type: application/json
+          binder: sqs
+          destination: log
+          group: log
           consumer:
             max-attempts: 1
 #          error-handler-definition: errorHandler
-      function:
-        bindings:
-          personCreator|uppercase|logger-out-0: uppercasePersonCreatorOut
+#      function:
+#        bindings:
+#          personCreator|uppercase|logger-out-0: uppercasePersonCreatorOut
       rabbit:
         bindings:
           log-in-0:
             consumer:
               auto-bind-dlq: true
+
     function:
 #      definition: addressCreator;personCreator|uppercase|logger;log
-      definition: log;personCreator|uppercase|logger
-
+#      definition: log;personCreator;uppercase
+      definition: personCreator;uppercase;log
+    aws:
+      sqs:
+        endpoint: http://localhost:4566

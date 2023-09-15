@@ -1,7 +1,8 @@
 package com.jimdo.demo.loggingconsumer
 
 data class Person(
-    val name: String,
+    val firstName: String,
+    val lastName: String,
 )
 
 data class Address(

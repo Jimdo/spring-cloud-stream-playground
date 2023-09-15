@@ -20,6 +20,7 @@ repositories {
 
 extra["springCloudVersion"] = "2022.0.4"
 extra["javaFakerVersion"] = "1.0.2"
+extra["cloudStreamBinderSqsVersion"] = "3.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -27,6 +28,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
+    implementation("de.idealo.spring:spring-cloud-stream-binder-sqs:${property("cloudStreamBinderSqsVersion")}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.github.javafaker:javafaker:${property("javaFakerVersion")}")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

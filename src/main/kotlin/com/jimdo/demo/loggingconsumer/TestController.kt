@@ -22,6 +22,6 @@ class TestController(
     @ResponseStatus(HttpStatus.OK)
     fun values(@PathVariable value: String) {
         log.info("Sending value $value to topic $topic.")
-        streamBridge.send(topic, Person(name = value))
+        streamBridge.send(topic, Person(firstName = value, lastName = value))
     }
 }

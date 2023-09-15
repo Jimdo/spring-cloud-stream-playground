@@ -36,16 +36,16 @@ class HandlersTest(
 
     @Test
     fun testLogConsumer(capturedOutput: CapturedOutput) {
-        input.send(GenericMessage(Person("Max Mustermann")), "person-topic")
-        assertTrue(capturedOutput.out.contains("log handler received: Person(name=Max Mustermann)"))
+        input.send(GenericMessage(Person(firstName = "Max", lastName = "Mustermann")), "person-topic")
+        assertTrue(capturedOutput.out.contains("log handler received: Person(firstName=Max, lastName=Mustermann)"))
     }
 
     @Test
     fun testUppercaseFunction(capturedOutput: CapturedOutput) {
-        input.send(GenericMessage(Person("Max Mustermann")), "person-topic")
-        assertTrue(capturedOutput.out.contains("uppercase handler received: Person(name=Max Mustermann)"))
+        input.send(GenericMessage(Person(firstName = "Max", lastName = "Mustermann")), "person-topic")
+        assertTrue(capturedOutput.out.contains("uppercase handler received: Person(firstName=Max, lastName=Mustermann)"))
         val message = output.receive(0, "uppercase-topic")
-        assertEquals("MAX MUSTERMANN", deserialize<Person>(message).name)
+        assertEquals("MAX", deserialize<Person>(message).firstName)
     }
 
     private inline fun <reified T> deserialize(message: Message<ByteArray>): T {

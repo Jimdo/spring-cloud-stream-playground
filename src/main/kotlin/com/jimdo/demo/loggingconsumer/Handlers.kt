@@ -23,7 +23,10 @@ class Handlers {
     fun uppercase(): Function<Person, Person> {
         return Function { person: Person ->
             log.info("uppercase handler received: $person")
-            Person(name = person.name.uppercase())
+            Person(
+                firstName = person.firstName.uppercase(),
+                lastName = person.lastName.uppercase(),
+            )
         }
     }
 

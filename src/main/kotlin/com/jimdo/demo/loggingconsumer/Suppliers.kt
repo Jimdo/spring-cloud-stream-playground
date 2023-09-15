@@ -16,7 +16,10 @@ class Suppliers {
     @Bean
     fun personCreator(): Supplier<Person> {
         return Supplier {
-            Person(name = faker.name().fullName()).also { log.info("supplying: $it") }
+            Person(
+                firstName = faker.name().firstName(),
+                lastName = faker.name().lastName(),
+            ).also { log.info("supplying: $it") }
         }
     }
 
