@@ -2,9 +2,37 @@ spring:
   rabbitmq:
     username: jimdo
     password: jimdo
+  integration:
+    poller:
+      fixed-delay: 5000
   cloud:
     stream:
+#      default:
+#        error-handler-definition: errorHandler
       bindings:
+        addressCreator-out-0:
+          destination: address-topic
+          group: address
+        uppercasePersonCreatorOut:
+          destination: person-topic
+          group: person
+          consumer:
+            max-attempts: 1
         log-in-0:
-          destination: log-topic
-          group: logging
+          destination: person-topic
+          group: person
+          consumer:
+            max-attempts: 1
+#          error-handler-definition: errorHandler
+      function:
+        bindings:
+          personCreator|uppercase|logger-out-0: uppercasePersonCreatorOut
+      rabbit:
+        bindings:
+          log-in-0:
+            consumer:
+              auto-bind-dlq: true
+    function:
+#      definition: addressCreator;personCreator|uppercase|logger;log
+      definition: log;personCreator|uppercase|logger
+

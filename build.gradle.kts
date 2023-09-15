@@ -19,6 +19,7 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2022.0.4"
+extra["javaFakerVersion"] = "1.0.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -27,6 +28,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.github.javafaker:javafaker:${property("javaFakerVersion")}")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.amqp:spring-rabbit-test")
     testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
